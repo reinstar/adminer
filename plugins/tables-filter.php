@@ -53,15 +53,17 @@ function tablesFilterInput() {
 	tablesFilterTimeout = window.setTimeout(tablesFilter, 200);
 }
 
-if (sessionStorage){
-	var db = qs('#dbs').querySelector('select');
-	db = db.options[db.selectedIndex].text;
-	if (db == sessionStorage.getItem('adminer_tables_filter_db') && sessionStorage.getItem('adminer_tables_filter')){
-		qs('#filter-field').value = sessionStorage.getItem('adminer_tables_filter');
-		tablesFilter();
+document.addEventListener("DOMContentLoaded", function(event) {
+	if (sessionStorage){
+		var db = qs('#dbs').querySelector('select');
+		db = db.options[db.selectedIndex].text;
+		if (db == sessionStorage.getItem('adminer_tables_filter_db') && sessionStorage.getItem('adminer_tables_filter')){
+			qs('#filter-field').value = sessionStorage.getItem('adminer_tables_filter');
+			tablesFilter();
+		}
+		sessionStorage.setItem('adminer_tables_filter_db', db);
 	}
-	sessionStorage.setItem('adminer_tables_filter_db', db);
-}
+});
 </script>
 <p class="jsonly"><input id="filter-field" autocomplete="off"><?php echo script("qs('#filter-field').oninput = tablesFilterInput;"); ?>
 <?php
